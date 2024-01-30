@@ -21,6 +21,8 @@ jobs:
         id: setup-matrix-combinations
         run: |
           MATRIX_PARAMS_COMBINATIONS=$(bash scripts/generate-matrix-jobs.sh)
+          echo $MATRIX_PARAMS_COMBINATIONS
+          echo "$($MATRIX_PARAMS_COMBINATIONS)"
           echo ::set-output name=matrix-combinations::{$MATRIX_PARAMS_COMBINATIONS}
     outputs:
       matrix-combinations: ${{ steps.setup-matrix-combinations.outputs.matrix-combinations }}
