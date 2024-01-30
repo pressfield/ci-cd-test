@@ -15,7 +15,7 @@ jobs:
           MATRIX_PARAMS_COMBINATIONS=$(bash scripts/generate-matrix-jobs.sh)
           echo $MATRIX_PARAMS_COMBINATIONS
           # echo "::set-output name=matrix-combinations::$MATRIX_PARAMS_COMBINATIONS"
-          echo "matrix-combinations=$MATRIX_PARAMS_COMBINATIONS" >> $GITHUB_ENV
+          echo "matrix-combinations=$MATRIX_PARAMS_COMBINATIONS" >> $GITHUB_OUTPUT
     outputs:
       matrix-combinations: ${{ steps.setup-matrix-combinations.outputs.matrix-combinations }}
 
