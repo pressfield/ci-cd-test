@@ -11,7 +11,7 @@ jobs:
       - name: Setup matrix combinations
         id: setup-matrix-combinations
         run: |
-          MATRIX_PARAMS_COMBINATIONS="{"include":[{"foo":"foo - 1","bar":"bar - 1"}]}"
+          MATRIX_PARAMS_COMBINATIONS='{"include":[{"foo":"foo - 1","bar":"bar - 1"}]}'
           echo $MATRIX_PARAMS_COMBINATIONS
           echo "::set-output name=matrix-combinations::$MATRIX_PARAMS_COMBINATIONS"
     outputs:
