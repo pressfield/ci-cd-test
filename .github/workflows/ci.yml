@@ -10,9 +10,7 @@ jobs:
 
       - name: Setup matrix combinations
         id: setup-matrix-jobs
-        run: |
-          # MATRIX_JOBS=$(bash scripts/generate-matrix-jobs.sh)
-          echo "matrix-jobs=$(bash scripts/generate-matrix-jobs.sh)" >> $GITHUB_OUTPUT
+        run: echo "matrix-jobs=$(bash scripts/generate-matrix-jobs.sh)" >> $GITHUB_OUTPUT
 
     outputs:
       matrix-jobs: ${{ steps.setup-matrix-jobs.outputs.matrix-jobs }}
