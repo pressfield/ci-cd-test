@@ -32,9 +32,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: |
-          echo ${{ needs.setup-matrix.outputs.matrix-combinations }}
-          echo ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
+      - run: echo ${{ needs.setup-matrix.outputs.matrix-combinations }}
+
+      - run: echo ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
 
   matrix-job:
     runs-on: ubuntu-latest
