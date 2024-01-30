@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup-matrix
     strategy:
-      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
+      matrix: ${{ fromJSON(needs.setup-matrix.outputs.matrix-combinations) }}
     steps:
       - uses: actions/checkout@v4
 
