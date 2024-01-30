@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup matrix combinations
-        run: bash generate-matrix-jobs.sh
+        run: bash scripts/generate-matrix-jobs.sh
 
   setup-matrix:
     runs-on: ubuntu-latest
