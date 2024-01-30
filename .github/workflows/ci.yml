@@ -14,7 +14,7 @@ jobs:
               {"foo": "foo-1", "bar": "bar-2"},
               {"foo": "foo-2", "bar": "bar-1"},
           '
-          echo ::set-output name=matrix-combinations::{\"include\":[$MATRIX_PARAMS_COMBINATIONS]}
+          echo "matrix-combinations=$MATRIX_PARAMS_COMBINATIONS" >> $GITHUB_OUTPUT
     outputs:
       matrix-combinations: ${{ steps.setup-matrix-combinations.outputs.matrix-combinations }}
   matrix-job:
@@ -26,4 +26,5 @@ jobs:
       - run: |
           echo foo=${{ matrix.foo }}
           echo bar=${{ matrix.bar }}
+          echo ${{ needs.setup-matrix.outputs.matrix-combinations }}
           echo ${{ fromJson(needs.setup-matrix.outputs.matrix-combinations) }}
