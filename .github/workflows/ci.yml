@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: run job ${{ matrix.id }}
+      - name: run job (${{ matrix.id }})
         run: |
           bash scripts/run-job.sh \
             --id ${{ matrix.id }} \
