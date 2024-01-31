@@ -5,12 +5,24 @@ on: [push]
 jobs:
   start-release:
     runs-on: ubuntu-latest
+
+    outputs:
+      release-version: ${{ steps.start-release.outputs.parallel-jobs }}
+
     steps:
       - uses: actions/checkout@v4
+
+      - id: start-release
+        run: echo "release-version=1.2.3" >> $GITHUB_OUTPUT
+
+  # ------------------------------------------------------------------------------------------------
 
   setup-parallel-jobs:
     needs: start-release
     runs-on: ubuntu-latest
+
+    outputs:
+      parallel-jobs: ${{ steps.setup-parallel-jobs.outputs.parallel-jobs }}
 
     steps:
       - uses: actions/checkout@v4
@@ -18,11 +30,14 @@ jobs:
       - id: setup-parallel-jobs
         run: echo "parallel-jobs=$(bash scripts/setup-parallel-jobs.sh)" >> $GITHUB_OUTPUT
 
-    outputs:
-      parallel-jobs: ${{ steps.setup-parallel-jobs.outputs.parallel-jobs }}
+  # ------------------------------------------------------------------------------------------------
 
   run-job:
-    needs: setup-parallel-jobs
+    needs: [
+      start-release,
+      setup-parallel-jobs
+    ]
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -31,13 +46,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: >
+      - run: |
           bash scripts/run-job.sh \
-            --version ${{ matrix.id }} \
-            --id ${{ matrix.id }}
+            --id ${{ matrix.id }} \
+            --version ${{ needs.start-release.outputs.release-version }}
+
+  # ------------------------------------------------------------------------------------------------
 
   finish-release:
     needs: run-job
+
     runs-on: ubuntu-latest
 
     steps:
