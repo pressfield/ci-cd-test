@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      release-version: ${{ steps.start-release.outputs.parallel-jobs }}
+      release-version: ${{ steps.start-release.outputs.release-version }}
 
     steps:
       - uses: actions/checkout@v4
