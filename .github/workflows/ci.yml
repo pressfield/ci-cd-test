@@ -14,8 +14,8 @@ jobs:
 
       - name: run semantic-release
         id: start-release
-        # run: echo "release-version=1.2.3" >> $GITHUB_OUTPUT
-        run: echo "no release"
+        run: echo "release-version=1.2.3" >> $GITHUB_OUTPUT
+        # run: echo "no release"
 
   # ------------------------------------------------------------------------------------------------
 
