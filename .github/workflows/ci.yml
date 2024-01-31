@@ -31,10 +31,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: >
+      - run: >-
           bash scripts/run-job.sh
-          --version ${{ matrix.id }}
-          --id ${{ matrix.id }}
+            --version ${{ matrix.id }}
+            --id ${{ matrix.id }}
 
   finish-release:
     needs: run-job
