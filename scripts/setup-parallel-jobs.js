@@ -5,5 +5,3 @@ console.log(JSON.stringify({
     { id: 'id-3' },
   ]
 }))
-
-// console.log(`{\"include\":[{\"foo\":\"foo - 1\",\"bar\":\"bar - 1\"}]}`)
