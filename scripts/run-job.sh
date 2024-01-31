@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-node scripts/run-job.js
+node scripts/run-job.js "$@"

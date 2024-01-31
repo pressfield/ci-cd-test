@@ -31,8 +31,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: echo ${{ matrix.id }}
-      - run: bash scripts/run-job.sh
+      - run: |
+          echo "RELEASE_VERSION=${{ matrix.id }}" >> $GITHUB_ENV
+          echo "RELEASE_JOB_ID=${{ matrix.id }}" >> $GITHUB_ENV
+
+      - run: |
+          bash scripts/run-job.sh ${{ env.RELEASE_VERSION }} ${{ env.RELEASE_JOB_ID }}
 
   finish-release:
     needs: run-job
