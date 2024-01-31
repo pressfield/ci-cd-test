@@ -1,33 +1,44 @@
 name: CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  setup-matrix:
+  start-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup matrix combinations
-        id: setup-matrix-jobs
-        run: echo "matrix-jobs=$(bash scripts/generate-matrix-jobs.sh)" >> $GITHUB_OUTPUT
+  setup-parallel-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: setup-parallel-jobs
+        run: echo "parallel-jobs=$(bash scripts/generate-matrix-jobs.sh)" >> $GITHUB_OUTPUT
+
+      - run: |
+          echo $GITHUB_OUTPUT
 
     outputs:
-      matrix-jobs: ${{ steps.setup-matrix-jobs.outputs.matrix-jobs }}
+      parallel-jobs: ${{ steps.setup-parallel-jobs.outputs.parallel-jobs }}
 
-  matrix-job:
+  run-job:
+    needs: setup-parallel-jobs
     runs-on: ubuntu-latest
-    needs: setup-matrix
 
     strategy:
-      matrix: ${{ fromJSON(needs.setup-matrix.outputs.matrix-jobs) }}
+      matrix: ${{ fromJSON(needs.setup-parallel-jobs.outputs.parallel-jobs) }}
 
     steps:
       - uses: actions/checkout@v4
 
       - run: |
           echo ${{ matrix.id }}
-          # echo foo=${{ matrix.foo }}
-          # echo bar=${{ matrix.bar }}
-          echo ${{ needs.setup-matrix.outputs.matrix-jobs }}
-          # echo ${{ fromJson(needs.setup-matrix.outputs.matrix-jobs) }}
+          echo $GITHUB_OUTPUT
+
+  finish-release:
+    needs: run-job
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
