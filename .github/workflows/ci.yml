@@ -31,9 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: >-
-          bash scripts/run-job.sh
-            --version ${{ matrix.id }}
+      - run: >
+          bash scripts/run-job.sh \
+            --version ${{ matrix.id }} \
             --id ${{ matrix.id }}
 
   finish-release:
