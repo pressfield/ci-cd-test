@@ -12,15 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: start-release
-        run: echo "release-version=1.2.3" >> $GITHUB_OUTPUT
+      - name: run semantic-release
+        id: start-release
+        # run: echo "release-version=1.2.3" >> $GITHUB_OUTPUT
+        run: echo "no release"
 
   # ------------------------------------------------------------------------------------------------
 
   setup-parallel-jobs:
     needs: start-release
 
-    if: ${{ needs.start-release.outputs.release-version != 'null' }}
+    if: ${{ needs.start-release.outputs.release-version != '' }}
 
     runs-on: ubuntu-latest
 
@@ -30,7 +32,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: setup-parallel-jobs
+      - name: setup parallel jobs
+        id: setup-parallel-jobs
         run: echo "parallel-jobs=$(bash scripts/setup-parallel-jobs.sh)" >> $GITHUB_OUTPUT
 
   # ------------------------------------------------------------------------------------------------
@@ -46,7 +49,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: |
+      - name: run job ${{ matrix.id }}
+        run: |
           bash scripts/run-job.sh \
             --id ${{ matrix.id }} \
             --version ${{ needs.start-release.outputs.release-version }}
